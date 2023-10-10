@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+
+<!-- Название у нас будет Post -->
+{% block title %}
+Post
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам пост, идентификатор которого был передан в url -->
+{% block content %}
+    <h1>Объявление</h1>
+    <b>Категория: {{ post_detail.category.category_name }}</b>
+    <br>
+    <b>{{ post_detail.post_title }}</b>
+    <br>
+    Автор: {{ post_detail.post_author.author_user }}
+    <br>
+    Дата: {{ post_detail.post_date|date:"d M Y" }}
+    <br>
+    Рейтинг: {{ post_detail.post_rating }}
+    <br>
+    {{ post_detail.post_text }}
+{% endblock content %}
+

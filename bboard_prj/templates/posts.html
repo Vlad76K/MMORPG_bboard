@@ -1,0 +1,36 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Posts
+{% endblock title %}
+
+{% block content %}
+<!--    <br>-->
+<!--    <button class ="button"><a href = "../client_subscriber/">Подписаться на рассылку</a></button>-->
+<!--    <button class ="button"><a href = "../sign/signup/">Регистрация/Вход</a></button>-->
+    <br>
+    <br>
+
+    <h1><span style = "color: blue"> Наши объявления </span></h1>
+    <!-- Если в переменной next_sale будет None, то выведется указанный в фильтре текст -->
+    <h5><span style = "color: magenta"> {{ next_action|default_if_none:"Чуть позже сообщим о новой акции!" }} </span></h5>
+    <br>
+
+    {% if posts %}
+       {% for serv in object_list %}
+            <!-- Выводим заголовок-->
+            <tr><td><h3><a href="../posts/{{serv.id}}">{{ serv.post_title }}</a></h3></td></tr>
+            <!-- Выводим автора -->
+            <td><h5>Автор: {{ serv.post_author.author_user }}  ...  Дата публикации: {{ serv.post_date|date:"d.m.Y" }} </h5></td>
+            <!-- Выводим дату публикации -->
+<!--            <tr><td><h5>Дата публикации: {{ serv.post_date|date:"d.m.Y" }}</h5></td></tr>-->
+            <!-- Выводим 20 символов текста -->
+            <tr><td>{{ serv.preview|truncatewords:20 }}</td></tr>
+            <br><br>
+       {% endfor %}
+    {% else %}
+        <h2>Объявлений нет!</h2>
+    {% endif %}
+
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+1. Создать новый проект в PyCharm
+2. Создать виртуальное окружение
+   a. Для установки virtualenv с Python нужно использовать pip. Желательно предварительно обновить этот инструмент.
+       python -m pip install --upgrade pip
+   б. После обновления можно установить и virtualenv:
+       pip install virtualenv
+   в. Перейдите в директорию, в которой вы хотите создать виртуальную среду(например папка проекта)
+   г. Создайте виртуальную среду:
+       virtualenv bboard_venv
+   д. Для активации новой виртуальной среды используйте команду:
+       source bboard_venv/bin/activate
+3. Создаем Django-проект:
+       django-admin startproject bboard_prj
+4. Переходим к папке проекта:
+       cd bboard_prj
+5. Запустим проект на выполнение:
+       python manage.py runserver
+6. Создаем Django-приложение:
+       python manage.py startapp bboard_app
+7. Спроектировать модели в models.py. Создать представления во views.py и формы в forms.py
+8. Заполнить settings.py, urls.py и bboardapp/urls.py
+9. Создать миграции:
+       python manage.py makemigrations
+10. Выполнить миграции:
+       python manage.py migrate
+

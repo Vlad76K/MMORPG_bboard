@@ -1,0 +1,23 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h1>Подписки</h1>
+    Подписавшись на новости в выбранных категориях, Вы будете получать
+    рассылку данных на e-Mail указанный Вами при регистрации:<br>
+      - еженедельная рассылка поступивших за неделю новостей и статей<br>
+      - рассылка по факту добавления новости или статьи в любую из выбранных Вами категорий
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        <td>{{ form.get_sub_con }}</td>
+        <br>
+        <br>
+        <td class="leftAligned">{{ form.category_connection }}</td>
+        <br>
+        <br>
+        <input type="submit" value="Подписаться" />
+    </form>
+{% endblock content %}
