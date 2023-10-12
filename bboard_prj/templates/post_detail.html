@@ -18,6 +18,6 @@ Post
     <br>
     Рейтинг: {{ post_detail.post_rating }}
     <br>
-    {{ post_detail.post_text }}
+    {{ post_detail.post_text|safe }}
 {% endblock content %}
 

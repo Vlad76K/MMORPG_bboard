@@ -1,22 +1,19 @@
 {% extends 'flatpages/default.html' %}
 
 {% block content %}
-<h1>Создание поста</h1>
-<hr>
-<form action="" method="post">
-    {% csrf_token %}
+    <h1>Создание поста</h1>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
 <!--    {{ form.as_p }}-->
-    Автор: {{ form.post_author }}
-    <br><br>
-    Заголовок:  {{ form.post_title }}
-    <br><br>
-    Текст:  {{ form.post_text }}
-    <br><br>
-    Категория:  {{ form.post_category }}
-    <br><br>
-    Рейтинг:  {{ form.post_rating }}
-    <br><br>
-    <input type="submit" value="Save" />
-</form>
-
+        Автор: {{ form.post_author }}
+        <br><br>
+        Заголовок:  {{ form.post_title }}
+        <br><br>
+        Текст:  {{ form.post_text }}
+        <br><br>
+        Категория:  {{ form.post_category }}
+        <br><br>
+        <input type="submit" value="Save" />
+    </form>
 {% endblock content %}

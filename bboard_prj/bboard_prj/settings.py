@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -130,21 +130,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static"
-]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# LOGIN_URL = 'http://127.0.0.1:8000/posts/'
-LOGIN_URL = 'sign/login/'
-# LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+
+STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -156,4 +157,39 @@ CKEDITOR_CONFIGS = {
 
 CKEDITOR_UPLOAD_PATH = 'upload/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+
+# LOGIN_URL = 'http://127.0.0.1:8000/posts/'
+LOGIN_URL = '../sign/login/'
+# LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/posts/'
+
+ACCOUNT_EMAIL_REQUIRED = True            # поле email является обязательным
+ACCOUNT_UNIQUE_EMAIL = True              # поле email является уникальным
+ACCOUNT_USERNAME_REQUIRED = False        # username теперь необязательный
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # аутентификация будет происходить посредством электронной почты
+ACCOUNT_EMAIL_VERIFICATION = 'optional'      # верификация почты отсутствует
+ACCOUNT_LOGOUT_REDIRECT_URL = '/posts/'
+
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 30
+ACCOUNT_FORMS = {'signup': 'bboardapp.forms.BasicSignupForm'}
+
+SITE_URL = 'http://127.0.0.1:8000'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'             # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465                          # порт smtp сервера тоже одинаковый
+EMAIL_HOST_USER = 'Kornyushin.Vladislav@yandex.ru'
+# EMAIL_HOST_USER = 'Kornyushin.Vladislav'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = '(6gH]J-w5+j,ZJDi'  # пароль от почты
+EMAIL_USE_SSL = True                      # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
+
+# список всех админов в формате ('имя', 'почта')
+ADMINS = [('Admin', 'Korwin@yandex.ru'),]
+# SERVER_EMAIL = 'Kornyushin.Vladislav@yandex.ru'  # это будет у нас вместо аргумента FROM в массовой рассылке
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 

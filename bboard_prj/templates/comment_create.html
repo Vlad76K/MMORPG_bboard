@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h1>Комментируем пост</h1>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% for comment_create in comment_create.review_set.all %}
+            {{ comment_create.comment_text }}
+        {% endfor %}
+
+        <input type="submit" value="Save" />
+    </form>
+{% endblock content %}
