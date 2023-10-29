@@ -183,8 +183,6 @@ class СheckComment(DetailView):
         return redirect(self.success_url+str(cmnt.comment_post_id))
 
 
-# Добавляем представление для изменения товара.
-# @method_decorator(login_required, name='dispatch')
 class PostUpdate(LoginRequiredMixin, UpdateView):
     permission_required = ('bboardapp.post_update', )
 
@@ -268,9 +266,9 @@ class NewsAddView(CreateView):
         return render(request, 'news_create.html', {'form': form})
 
 class NewsDetail(DetailView):
-    model = News                         # Модель всё та же, но мы хотим получать информацию по отдельному посту
+    model = News
     form = NewsForm
     template_name = 'news_detail.html'
-    context_object_name = 'news_detail'  # Название объекта, в котором будет выбранный пользователем пост
+    context_object_name = 'news_detail'
     success_url = '../../news/'
 
