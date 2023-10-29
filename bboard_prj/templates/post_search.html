@@ -1,0 +1,78 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+<!-- Название у нас будет posts -->
+{% block title %}
+Posts
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все посты -->
+{% block content %}
+   <h1><span style = "color: blue"> Новости для Вас </span></h1>
+   <span style = "color: red"> Всего новостей/статей: {{ news|length }} ------ Текущая дата: {% current_time '%b %d %Y %A' %}</span>
+   <!-- Если в переменной next_sale будет None,
+   то выведется указанный в фильтре текст -->
+   <h5><span style = "color: magenta"> {{ next_action|default_if_none:"Чуть позже сообщим о новой акции!" }} </span></h5>
+   <br>
+
+   {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+       <br>
+       <br>
+   </form>
+
+   {% if news %}
+      {% for serv in object_list %}
+          <!-- Выводим заголовок-->
+          <tr><td><h3>{{ serv.post_title|censor }}</h3></td></tr>
+          <!-- Выводим автора -->
+          <!--<td><h4>{{ serv.post_author.author_user }}</h4></td>-->
+          <!-- Выводим дату публикации -->
+          <tr><td><h5>Дата публикации: {{ serv.post_date|date:"d.m.Y" }}</h5></td></tr>
+          <!-- Выводим 20 символов текста статьи -->
+          <tr><td>{{ serv.preview|censor|truncatewords:20 }}</td></tr>
+          <br><br>
+      {% endfor %}
+   {% else %}
+      <h2>Ничего не найдено!</h2>
+   {% endif %}
+
+   {# Добавляем пагинацию на страницу #}
+<!--   {% for p in paginator.page_range %}-->
+<!--       {% if page_obj.number == p %}-->
+<!--            <li class="page-num page-num-selected">{{ p }}</li>-->
+<!--            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}-->
+<!--            <li class="page-num">-->
+<!--            <a href="?page={{ p }}">{{ p }}</a></li>-->
+<!--       {% endif %}-->
+<!--   {% endfor %}-->
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+<!--           ...-->
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+{% endblock content %}
+

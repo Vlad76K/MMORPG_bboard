@@ -1,0 +1,39 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+    <head>
+        <title>An example</title>
+        <a target="_blank"
+           class="btn btn-info pull-right"
+           href="{% url СheckComment comment_updt.pk %}/?next={{ comment_updt.link_for_item|urlencode:'' }}">
+           Check It Out
+        </a>
+        <script>
+            function call_counter(url, pk) {
+                window.open(url);
+                $.get('СheckComment/'+pk+'/', function (data) {
+                    alert("counter updated!");
+                });
+            }
+        </script>
+    </head>
+
+{% endblock title %}
+
+{% block content %}
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue">Комментарий</font></a></b>
+    <hr>
+    <font size="5" color="LemonChiffon"><b>Дата:</b> {{ comment_updt.comment_datetime }}</font><br>
+    <font size="5" color="LemonChiffon"><b>Текст:</b> {{ comment_updt.comment_text }}</font><br>
+<!--    <font size="5" color="LemonChiffon">{{ comment_updt.pk }}</font>-->
+    <br>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if comment_updt.comment_accept == '' %}
+            <button type="submit" class="btn btn-success" name="success">Принять</button>
+            <button type="submit" class="btn btn-danger" name="reject">Удалить</button>
+        {% else %}
+            <h1><span style = "color: PaleGreen"> Данный комментарий был принят </span></h1>
+        {% endif %}
+    </form>
+{% endblock content %}

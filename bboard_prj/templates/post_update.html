@@ -1,13 +1,34 @@
 {% extends 'flatpages/default.html' %}
 
 {% block content %}
-<h1>Редактирование поста</h1>
-<hr>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue"> Редактирование поста </font></a></b>
+    <hr>
+<!--    <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem; background-image: url(&quot;../media/images/s2.jpg&quot;);">-->
+    <form action="" method="post" enctype="multipart/form-data">
+<!--        <font size="4" color="LemonChiffon">user.pk: {{ user.pk }}</font><br><br>-->
+<!--        <font size="4" color="LemonChiffon">form.post_author_id: {{ form.post_author__pk }}</font><br><br>-->
 
-    <input type="submit" value="Save" />
-</form>
-
+        {% if user.is_authenticated %}
+                {% csrf_token %}
+                <font size="5" color="LemonChiffon">Дата: {{ form.post_date|date:"d-m-Y H:i" }}</font>
+                <br><br>
+                <font size="5" color="LemonChiffon">Автор: {{ user.username }}</font>
+<!--            Автор: {{ form.post_author }}-->
+                <br><br>
+                <font size="5" color="LemonChiffon">Заголовок:  {{ form.post_title }}</font>
+                <br><br>
+                <font size="5" color="LemonChiffon">Текст (введите текст без дополнительных тегов):</font><br>
+                <font size="5" color="LemonChiffon">{{ form.post_text }}</font>
+                <br><br>
+                <font size="5" color="LemonChiffon">Категория:  {{ form.post_category }}</font>
+                <br><br>
+                <font size="5" color="LemonChiffon">Картинка: {{ form.post_image }}</font>
+                <br><br>
+                <font size="5" color="LemonChiffon">Видео: {{ form.post_video }} *если видео не требуется - ставь пробел в поле</font>
+                <br><br>
+                <button type="submit" class="btn btn-success">Принять изменения</button><br>
+        {% else %}
+            <h5><font size="5" color="LemonChiffon"> Вы не авторизованы </font></h5>
+        {% endif %}
+    </form>
 {% endblock content %}

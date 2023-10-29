@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+<!-- Название у нас будет Post -->
+{% block title %}
+News
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам пост, идентификатор которого был передан в url -->
+{% block content %}
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue"> Новость </font></a></b><br>
+    <b><font size="5" color="LemonChiffon">{{ news_detail.news_title }}</font></b><br>
+    <font size="5" color="LemonChiffon">Автор: {{ news_detail.news_author.author_user }}</font><br>
+    <font size="5" color="LemonChiffon">Дата: {{ news_detail.news_date|date:"d M Y" }}</font><br>
+    <font size="5" color="LemonChiffon">{{ news_detail.news_text|safe }}</font>
+    <br>
+{% endblock content %}
+
+

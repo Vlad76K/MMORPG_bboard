@@ -1,19 +1,30 @@
 {% extends 'flatpages/default.html' %}
 
 {% block content %}
-    <h1>Создание поста</h1>
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue"> Создание поста </font></a></b>
     <hr>
-    <form action="" method="post">
+<!--    <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem; background-image: url(&quot;../media/images/s2.jpg&quot;);">-->
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-<!--    {{ form.as_p }}-->
-        Автор: {{ form.post_author }}
+        <font size="5" color="LemonChiffon">Дата: {{ form.post_date|date:"d-m-Y H:i" }}</font>
         <br><br>
-        Заголовок:  {{ form.post_title }}
+        {% if user.is_authenticated %}
+            <font size="5" color="LemonChiffon">Автор: {{ user.username }}</font>
+        {% else %}
+            Not logged in.
+        {% endif %}
+<!--        Автор: {{ form.post_author }}-->
         <br><br>
-        Текст:  {{ form.post_text }}
+        <font size="5" color="LemonChiffon">Заголовок:  {{ form.post_title }}</font>
         <br><br>
-        Категория:  {{ form.post_category }}
+        <font size="5" color="LemonChiffon">Текст:  {{ form.post_text }}</font>
         <br><br>
-        <input type="submit" value="Save" />
+        <font size="5" color="LemonChiffon">Категория:  {{ form.post_category }}</font>
+        <br><br>
+        <font size="5" color="LemonChiffon">Картинка: {{ form.post_image }}</font>
+        <br><br>
+        <font size="5" color="LemonChiffon">Видео: {{ form.post_video }} *если видео не требуется - ставь пробел в поле</font>
+        <br><br>
+        <button type="submit" class="btn btn-success">Загрузить</button><br>
     </form>
 {% endblock content %}

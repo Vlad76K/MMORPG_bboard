@@ -1,72 +1,54 @@
 from datetime import datetime
 
-from ckeditor.fields import RichTextFormField
-from ckeditor.widgets import CKEditorWidget
-from ckeditor_demo.demo_application.widgets import CkEditorMultiWidget
-from ckeditor_uploader.fields import RichTextUploadingFormField
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.core.exceptions import ValidationError
 from django import forms
-from django.http import HttpResponseRedirect
-
-from .models import Post, Comment, User
+from .models import Post, Comment, UploadImage, UploadVideo, News
 
 
-class CkEditorForm(forms.Form):
-    ckeditor_standard_example = RichTextFormField()
-    # ckeditor_upload_example = RichTextUploadingFormField(config_name="my-custom-toolbar")
+class UserImageForm(forms.ModelForm):
+    class Meta:
+        model = UploadImage
+        fields = '__all__'
 
 
-class CkEditorMultiWidgetForm(forms.Form):
-    pass
-    # SUBWIDGET_SUFFIXES = ["0", "1"]
-    #
-    # ckeditor_standard_multi_widget_example = forms.CharField(
-    #     widget=CkEditorMultiWidget(
-    #         widgets={suffix: CKEditorWidget for suffix in SUBWIDGET_SUFFIXES},
-    #     ),
-    # )
-    # ckeditor_upload_multi_widget_example = forms.CharField(
-    #     widget=CkEditorMultiWidget(
-    #         widgets={
-    #             suffix: CKEditorUploadingWidget(config_name="my-custom-toolbar")
-    #             for suffix in SUBWIDGET_SUFFIXES
-    #         },
-    #     ),
-    # )
+class UserVideoForm(forms.ModelForm):
+    class Meta:
+        model = UploadVideo
+        fields = '__all__'
 
 
 class PostForm(forms.ModelForm):
-    post_text = forms.CharField(widget=CKEditorWidget(), help_text='Тут нужно ввести всю статью в формате HTML')
-
-    comment_text = forms.CharField(widget=CKEditorWidget(), help_text='Тут нужно ввести свой коммент в формате HTML')
+    post_text = forms.CharField(widget=CKEditorUploadingWidget(), initial='CKEditorUploadingWidget !!!', help_text='Тут нужно ввести всю статью в формате HTML')
+    post_date = datetime.now()
+    post_author = forms.IntegerField()
 
     class Meta:
         model = Post
-        fields = ['post_author', 'post_title', 'post_text', 'post_category']
+        fields = ['post_author', 'post_title', 'post_text', 'post_category', 'post_image', 'post_video']
 
     def clean(self):
         cleaned_data = super().clean()
         post_text = cleaned_data.get('post_text')
         post_title = cleaned_data.get('post_title')
         if str(post_text) == str(post_title):
-            raise ValidationError({
-                'post_title': "Заголовок не должен быть идентичен тексту."
-            })
+            raise ValidationError({'post_title': "Заголовок не должен быть идентичен тексту."})
 
         return cleaned_data
 
 
+class NewsForm(forms.ModelForm):
+    news_text = forms.CharField(widget=CKEditorUploadingWidget(), initial='CKEditorUploadingWidget !!!', help_text='Тут нужно ввести всю статью в формате HTML')
+    news_date = datetime.now()
+    # news_author = forms.IntegerField()
+
+    class Meta:
+        model = News
+        fields = ['news_author', 'news_title', 'news_text', 'news_image']
+
+
 class CommentForm(forms.ModelForm):
+
     class Meta:
         model = Comment
-        fields = ['comment_text']
-
-    def post(self, request, *args, **kwargs):
-        subscribes = Comment(comment_text=self.comment_text,
-                             comment_datetime=datetime.now(),
-                             comment_post_id=Post.objects.get(pk=1),
-                             comment_user_id=User.objects.get(pk=request.user.pk), )
-        subscribes.save()
-        return HttpResponseRedirect('../posts/', request)
-
+        fields = ['comment_text', 'comment_post', 'comment_user']

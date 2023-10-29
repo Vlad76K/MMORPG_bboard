@@ -7,7 +7,8 @@ from django.contrib import admin
 from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-from .models import Post, Author, PostCategory, Comment, Category
+from .models import Post, Author, Comment, Category, News
+
 
 class PostAdminForm(forms.ModelForm):
     post_text = forms.CharField(widget=CKEditorUploadingWidget)
@@ -26,8 +27,8 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post)
+admin.site.register(News)
 admin.site.register(Author)
-admin.site.register(PostCategory)
 admin.site.register(Comment)
 admin.site.register(Category)
 # admin.site.register(PostAdmin)

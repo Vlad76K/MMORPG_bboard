@@ -1,0 +1,3 @@
+from bboard_prj.settings import BASE_DIR
+from bboardapp.my_function import mail_about_comment
+from sign.my_sign_func import insert_confirmation_code, select_confirmation_code

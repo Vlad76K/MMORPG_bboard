@@ -1,11 +1,24 @@
 {% extends "main.html" %}
 
+{% load custom_tags %}
+
 {% block content %}
-<div><h4><a>Уже зарегистрированы? </a><a href="/sign/login">Войти</a></h4></div>
-<h2> Регистрация </h2>
-<form method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Продолжить">
-</form>
+    <div><h4><a>Уже зарегистрированы? </a><a href="/sign/login">Войти</a></h4></div>
+    <h2> Регистрация </h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <br>
+        <span>
+            <b>Заполняется после получения кода подтверждения:</b><br>
+            <b>Email *</b><br>
+            <input type="text" class="form-control" name="conf_email" id="cc_email" placeholder="почта">
+            <br><br>
+            <b>Код подтверждения *</b><br>
+            <input type="text" class="form-control" name="conf_code" id="cc_code" placeholder="код из письма">
+            <br><br>
+        </span>
+        <input type="submit" value="Продолжить">
+    </form>
 {% endblock %}

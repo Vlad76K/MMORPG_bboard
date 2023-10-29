@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-oj#6dy5dy&2__mxzct^v+6)+9vyto7w&8ja*na()q%x_#7263!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
 
 # Application definition
 
@@ -39,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'bboardapp',
+    'django.forms',
     'ckeditor',
     'ckeditor_uploader',
 
@@ -144,20 +143,27 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
         'height': 300,
         'width': '100%',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Outdent', 'Отступ', 'JustifyLeft', 'JustifyCenter',
+             'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['removeFormat', 'Source']
+        ]
     },
 }
 
 CKEDITOR_UPLOAD_PATH = 'upload/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
-
+# FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 # LOGIN_URL = 'http://127.0.0.1:8000/posts/'
 LOGIN_URL = '../sign/login/'
@@ -180,8 +186,7 @@ SITE_URL = 'http://127.0.0.1:8000'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'             # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = 465                          # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = 'Kornyushin.Vladislav@yandex.ru'
-# EMAIL_HOST_USER = 'Kornyushin.Vladislav'  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_USER = 'Kornyushin.Vladislav@yandex.ru'  # ящик с которого отправляется системная почта (рассылки и уведомления)
 EMAIL_HOST_PASSWORD = '(6gH]J-w5+j,ZJDi'  # пароль от почты
 EMAIL_USE_SSL = True                      # Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках, но включать его здесь обязательно
 

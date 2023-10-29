@@ -16,19 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('bboardapp.urls')),
+    path('', include(('bboardapp.urls'), namespace='bboardapp')),
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
+    path('contact/', include('bboardapp.urls')),
     path('posts/', include('bboardapp.urls')),
     path('sign/', include('sign.urls')),
     path('post_create/', include('bboardapp.urls')),
+    # path('post_update/', include('bboardapp.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

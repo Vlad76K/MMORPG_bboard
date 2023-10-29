@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <b><a style = "font-family: &quot;Source Sans Pro&quot;, sans-serif;"><font size="8" color="LightSkyBlue"> Создание новости </font></a></b>
+    <hr>
+<!--    <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem; background-image: url(&quot;../media/images/s2.jpg&quot;);">-->
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <font size="5" color="LemonChiffon">Дата: {{ form.news_date|date:"d-m-Y H:i" }}</font>
+        <br><br>
+        {% if user.is_authenticated %}
+            <font size="5" color="LemonChiffon">Автор: {{ user.username }}</font>
+        {% else %}
+            Not logged in.
+        {% endif %}
+<!--        Автор: {{ form.post_author }}-->
+        <br><br>
+        <font size="5" color="LemonChiffon">Заголовок:  {{ form.news_title }}</font>
+        <br><br>
+        <font size="5" color="LemonChiffon">Текст:  {{ form.news_text }}</font>
+        <br><br>
+        <font size="5" color="LemonChiffon">Категория:  {{ form.news_category }}</font>
+        <br><br>
+        <font size="5" color="LemonChiffon">Картинка: {{ form.news_image }}</font>
+        <br><br>
+        <button type="submit" class="btn btn-success">Загрузить</button><br>
+    </form>
+{% endblock content %}
